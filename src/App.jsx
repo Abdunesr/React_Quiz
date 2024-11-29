@@ -1,10 +1,15 @@
 import React from "react";
-import DateCounter from "./DateCounter";
+import Mains from "./Mains";
+import Header from "./Header";
 
 function App() {
   return (
-    <div>
-      <DateCounter />
+    <div className="app">
+      <Header />
+      <Mains>
+        <p>1/15</p>
+        <p>Questions?</p>
+      </Mains>
     </div>
   );
 }
