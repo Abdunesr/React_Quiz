@@ -4,10 +4,12 @@ import Header from "./Header";
 import Loader from "./Loader";
 import Error from "./Error";
 import StartScreen from "./StartScreen";
+import Questions from "./Questions";
 
 const initialstate = {
   questions: [],
   status: "loading",
+  index: 0,
 };
 function reducer(state, action) {
   switch (action.type) {
@@ -15,12 +17,17 @@ function reducer(state, action) {
       return { ...state, questions: action.payload, status: "ready" };
     case "DataFailed":
       return { ...state, status: "Error" };
+    case "start":
+      return { ...state, status: "active" };
     default:
       throw new Error("unknown Error occured");
   }
 }
 function App() {
-  const [{ questions, status }, dispatch] = useReducer(reducer, initialstate);
+  const [{ questions, status, index }, dispatch] = useReducer(
+    reducer,
+    initialstate
+  );
   const numofQuestions = questions.length;
   useEffect(function () {
     fetch("http://localhost:9000/questions")
@@ -34,7 +41,10 @@ function App() {
       <Mains>
         {status === "loading" && <Loader />}
         {status === "Error" && <Error />}
-        {status === "ready" && <StartScreen numofQuestions={numofQuestions} />}
+        {status === "ready" && (
+          <StartScreen numofQuestions={numofQuestions} dispatch={dispatch} />
+        )}
+        {status === "active" && <Questions question={questions[index]} />}
       </Mains>
     </div>
   );

@@ -1,4 +1,4 @@
-import logo512 from "./assets/react.svg";
+import logo512 from "../assets/react.svg";
 function Header() {
   return (
     <header className="app-header">
