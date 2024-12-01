@@ -5,6 +5,7 @@ import Loader from "./Loader";
 import Error from "./Error";
 import StartScreen from "./StartScreen";
 import Questions from "./Questions";
+import NextButton from "./NextButton";
 
 const initialstate = {
   questions: [],
@@ -30,6 +31,12 @@ function reducer(state, action) {
           action.payload === question.correctOption
             ? state.points + question.points
             : state.points,
+      };
+    case "nextQuestion":
+      return {
+        ...state,
+        index: state.index + 1,
+        answer: null,
       };
 
     default:
@@ -64,6 +71,7 @@ function App() {
             dispatch={dispatch}
           />
         )}
+        <NextButton dispatch={dispatch} answer={answer} />
       </Mains>
     </div>
   );
